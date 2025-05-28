@@ -1,14 +1,10 @@
-# Welcome to your CDK TypeScript project
+# デプロイ
+npx cdk deploy --context stage=[stage]
 
-This is a blank project for CDK development with TypeScript.
+上記のコマンドを実行することでstageごとに分離した環境を作成できます。
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `npx cdk deploy`  deploy this stack to your default AWS account/region
-* `npx cdk diff`    compare deployed stack with current state
-* `npx cdk synth`   emits the synthesized CloudFormation template
+## スタック
+  -  API Gateway
+  -  Lambda
+  -  ECR
+デプロイの際にbackendディレクトリ内のDockerfileがビルドされたイメージが自動で作成されたECRのリポジトリにプッシュされ、API GatewayによってLambda関数が実行される際にはECRにプッシュされたコンテナイメージが実行されます。
