@@ -1,17 +1,30 @@
-// import * as cdk from 'aws-cdk-lib';
-// import { Template } from 'aws-cdk-lib/assertions';
-// import * as Cdk from '../lib/cdk-stack';
+import * as cdk from "aws-cdk-lib";
+import { Template } from "aws-cdk-lib/assertions";
+import { FibApiStack } from "../lib/cdk-stack";
 
-// example test. To run these tests, uncomment this file along with the
-// example resource in lib/cdk-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new Cdk.CdkStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+test("Lambda Function Created", () => {
+	const app = new cdk.App();
+	const stack = new FibApiStack(app, "TestStack", { stage: "dev" });
+	const template = Template.fromStack(stack);
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+	template.hasResourceProperties("AWS::Lambda::Function", {
+		FunctionName: "fib_api_dev",
+		MemorySize: 128,
+		Timeout: 30,
+		Architectures: ["arm64"],
+	});
+});
+
+test("API Gateway /fib GET exists", () => {
+	const app = new cdk.App();
+	const stack = new FibApiStack(app, "TestStack", { stage: "dev" });
+	const template = Template.fromStack(stack);
+
+	template.hasResourceProperties("AWS::ApiGateway::Method", {
+		HttpMethod: "GET",
+	});
+
+	template.hasResourceProperties("AWS::ApiGateway::Resource", {
+		PathPart: "fib",
+	});
 });
