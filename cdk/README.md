@@ -8,4 +8,4 @@ npx cdk deploy --context stage=[stage]
   -  Lambda
   -  ECR
 
-デプロイの際にbackendディレクトリ内のDockerfileがビルドされたイメージが自動で作成されたECRのリポジトリにプッシュされ、API GatewayによってLambda関数が実行される際にはECRにプッシュされたコンテナイメージが実行されます。
+デプロイの際にbackendディレクトリ内のDockerfileがビルドされ、そのイメージが自動で作成されたECRのリポジトリにプッシュされ、API GatewayによってLambda関数が実行される際にはECRにプッシュされたコンテナイメージが実行されます。
